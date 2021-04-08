@@ -1,8 +1,6 @@
 package com.film.online.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,6 +8,10 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "user")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User extends BaseEntity {
 
     @Column(name = "pictureURL")
