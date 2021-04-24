@@ -19,6 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/api/auth/")
 public class AuthenticationRestController {
+
     @Autowired
     public AuthenticationRestController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
         this.authenticationManager = authenticationManager;
@@ -32,10 +33,9 @@ public class AuthenticationRestController {
 
     @GetMapping(value = "test")
     public ResponseEntity test(){
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken("Stepfather", "test"));
         User user = userService.findByUsername("Stepfather");
         System.out.println(user);
-        String username = user.getUsername();
+        String username = "Stepfather";
         Map<Object, Object> response = new HashMap<>();
         response.put("username", username);
 
