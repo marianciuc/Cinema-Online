@@ -1,10 +1,11 @@
 package com.crudexample.online.service;
 
-import com.crudexample.online.entity.User;
+import com.crudexample.online.model.User;
 
 import java.util.List;
 
 public interface UserService {
+
     User register(User user);
 
     List<User> getAll();
@@ -13,5 +14,5 @@ public interface UserService {
 
     User findById(Long id);
 
-    void DeleteUser(Long id);
+    void delete(Long id);
 }

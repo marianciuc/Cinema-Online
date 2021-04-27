@@ -1,9 +1,16 @@
-package com.crudexample.online.entity;
+package com.crudexample.online.model;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
+
 
 @Entity
 @Table(name = "users")
@@ -19,10 +26,10 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "mainPictureUrl")
+    @Column(name = "picture")
     private String mainPictureUrl;
 
-    @Column(name = "backgroundImageUrl")
+    @Column(name = "background")
     private String backgroundImageUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -1,12 +1,13 @@
 package com.crudexample.online.service.impl;
 
-import com.crudexample.online.entity.EntityStatus;
-import com.crudexample.online.entity.Role;
-import com.crudexample.online.entity.User;
+import lombok.extern.slf4j.Slf4j;
+import com.crudexample.online.model.Role;
+import com.crudexample.online.model.Status;
+import com.crudexample.online.model.User;
 import com.crudexample.online.repository.RoleRepository;
 import com.crudexample.online.repository.UserRepository;
 import com.crudexample.online.service.UserService;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -35,36 +37,45 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userRoles);
-        user.setStatus(EntityStatus.ACTIVE);
+        user.setStatus(Status.ACTIVE);
 
         User registeredUser = userRepository.save(user);
+
+        log.info("IN register - user: {} successfully registered", registeredUser);
+
         return registeredUser;
     }
 
     @Override
     public List<User> getAll() {
         List<User> result = userRepository.findAll();
+        log.info("IN getAll - {} users found", result.size());
         return result;
     }
 
     @Override
     public User findByUsername(String username) {
         User result = userRepository.findByUsername(username);
+        log.info("IN findByUsername - user: {} found by username: {}", result, username);
         return result;
     }
 
     @Override
     public User findById(Long id) {
         User result = userRepository.findById(id).orElse(null);
+
+        if (result == null) {
+            log.warn("IN findById - no user found by id: {}", id);
+            return null;
+        }
+
+        log.info("IN findById - user: {} found by id: {}", result);
         return result;
     }
 
     @Override
-    public void DeleteUser(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user != null) {
-            user.setStatus(EntityStatus.DELETED);
-            userRepository.save(user);
-        };
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+        log.info("IN delete - user with id: {} successfully deleted");
     }
 }

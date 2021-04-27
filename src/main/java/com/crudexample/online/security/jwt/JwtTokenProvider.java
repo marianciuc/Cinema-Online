@@ -1,6 +1,11 @@
 package com.crudexample.online.security.jwt;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import com.crudexample.online.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,17 +18,21 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
+
 
 @Component
 public class JwtTokenProvider {
 
     @Value("${jwt.token.secret}")
-    private String secretKey;
+    private String secret;
 
     @Value("${jwt.token.expired}")
     private long validityInMilliseconds;
+
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -36,20 +45,22 @@ public class JwtTokenProvider {
 
     @PostConstruct
     protected void init() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        secret = Base64.getEncoder().encodeToString(secret.getBytes());
     }
 
-    public String createToken(String username) {
+    public String createToken(String username, List<Role> roles) {
+
         Claims claims = Jwts.claims().setSubject(username);
+        claims.put("roles", getRoleNames(roles));
 
         Date now = new Date();
-        Date validity = new Date(now.getTime()+ validityInMilliseconds);
+        Date validity = new Date(now.getTime() + validityInMilliseconds);
 
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+        return Jwts.builder()//
+                .setClaims(claims)//
+                .setIssuedAt(now)//
+                .setExpiration(validity)//
+                .signWith(SignatureAlgorithm.HS256, secret)//
                 .compact();
     }
 
@@ -59,7 +70,7 @@ public class JwtTokenProvider {
     }
 
     public String getUsername(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
     }
 
     public String resolveToken(HttpServletRequest req) {
@@ -72,7 +83,7 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
 
             if (claims.getBody().getExpiration().before(new Date())) {
                 return false;
@@ -82,5 +93,15 @@ public class JwtTokenProvider {
         } catch (JwtException | IllegalArgumentException e) {
             throw new JwtAuthenticationException("JWT token is expired or invalid");
         }
+    }
+
+    private List<String> getRoleNames(List<Role> userRoles) {
+        List<String> result = new ArrayList<>();
+
+        userRoles.forEach(role -> {
+            result.add(role.getName());
+        });
+
+        return result;
     }
 }
