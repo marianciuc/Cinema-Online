@@ -1,9 +1,11 @@
 package com.crudexample.online.rest;
 
 import com.crudexample.online.dto.AuthenticationRequestDto;
+import com.crudexample.online.dto.RegistrationRequestDto;
 import com.crudexample.online.model.User;
 import com.crudexample.online.security.jwt.JwtTokenProvider;
 import com.crudexample.online.service.UserService;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,6 +38,15 @@ public class AuthenticationRestControllerV1 {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
     }
+
+//    @PostMapping("register")
+//    public ResponseEntity register(@RequestBody RegistrationRequestDto requestDto){
+//        try {
+//            userService.register(requestDto);
+//        }catch (){
+//
+//        }
+//    }
 
     @PostMapping("login")
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {

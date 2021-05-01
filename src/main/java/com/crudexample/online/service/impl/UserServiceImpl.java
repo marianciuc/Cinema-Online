@@ -1,5 +1,6 @@
 package com.crudexample.online.service.impl;
 
+import com.crudexample.online.dto.RegistrationRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import com.crudexample.online.model.Role;
 import com.crudexample.online.model.Status;
@@ -30,14 +31,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(User user) {
+    public User register(RegistrationRequestDto userRequest) {
+
+        User user = new User();
+
         Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEmail(userRequest.getEmail());
+
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
+
 
         User registeredUser = userRepository.save(user);
 
