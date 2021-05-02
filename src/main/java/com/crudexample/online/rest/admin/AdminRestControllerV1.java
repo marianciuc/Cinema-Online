@@ -1,4 +1,4 @@
-package com.crudexample.online.rest;
+package com.crudexample.online.rest.admin;
 
 import com.crudexample.online.dto.AdminUserDto;
 import com.crudexample.online.model.User;
