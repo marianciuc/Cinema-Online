@@ -17,5 +17,7 @@ public interface FilmService {
 
     List<Film> getAll();
 
+    void rate(Long id, Integer mark);
+
     Film update(Long id, FilmRequestDto filmRequestDto);
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/api/v1/film/")
+@RequestMapping(value = "/api/v1/open/film/")
 public class FilmRestControllerV1 {
 
     private FilmService filmService;

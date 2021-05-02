@@ -81,6 +81,21 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
+    public void rate(Long id, Integer mark) {
+        Optional<Film> optionalFilm = filmRepository.findById(id);
+
+        if (optionalFilm.isPresent()) {
+
+            optionalFilm.get().setVotes(optionalFilm.get().getVotes() + 1);
+            optionalFilm.get().setScore(optionalFilm.get().getScore() + mark);
+
+            filmRepository.save(optionalFilm.get());
+            return;
+        }
+        throw new IncorrectIdException("Id not founded");
+    }
+
+    @Override
     public Film update(Long id, FilmRequestDto filmRequestDto) {
         Film toUpdate = filmRepository.findFilmById(id);
 
