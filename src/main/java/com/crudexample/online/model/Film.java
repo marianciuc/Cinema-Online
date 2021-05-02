@@ -14,7 +14,7 @@ public class Film extends BaseEntity {
     private String name;
 
     @Column(name = "kpk_id")
-    private String kpkId;
+    private Integer kpkId;
 
     @Column(name = "score")
     private Integer score;
