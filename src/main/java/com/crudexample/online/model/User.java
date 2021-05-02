@@ -10,6 +10,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -43,5 +44,5 @@ public class User extends BaseEntity {
     @JoinTable(name = "user_films",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "film_id", referencedColumnName = "id")})
-    private List<Film> films;
+    private Set<Film> films;
 }
