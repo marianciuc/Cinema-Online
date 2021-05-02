@@ -1,6 +1,9 @@
 package com.crudexample.online.service.impl;
 
+import com.crudexample.online.constant.MediaConstants;
 import com.crudexample.online.dto.RegistrationRequestDto;
+import com.crudexample.online.dto.UserDto;
+import com.crudexample.online.exceptions.RegistrationException;
 import lombok.extern.slf4j.Slf4j;
 import com.crudexample.online.model.Role;
 import com.crudexample.online.model.Status;
@@ -13,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,26 +35,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(RegistrationRequestDto userRequest) {
-
+    public User create(RegistrationRequestDto registrationRequestDto) {
         User user = new User();
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
 
-        user.setEmail(userRequest.getEmail());
-
-        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        user.setUsername(registrationRequestDto.getUsername());
+        user.setEmail(registrationRequestDto.getEmail());
+        user.setPassword(passwordEncoder.encode(registrationRequestDto.getPassword()));
         user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
+        user.setCreated(new Date());
+        user.setUpdated(new Date());
+        user.setBackgroundImageUrl(MediaConstants.PROFILE_DEFAULT_BACKGROUND);
+        user.setMainPictureUrl(MediaConstants.MAIN_PICTURE_URL);
 
-
-        User registeredUser = userRepository.save(user);
-
-        log.info("IN register - user: {} successfully registered", registeredUser);
-
-        return registeredUser;
+        try{
+            System.out.println(user);
+            userRepository.save(user);
+            return user;
+        }catch (RegistrationException e){
+            throw new RegistrationException(e.getMessage());
+        }
     }
 
     @Override
@@ -65,6 +73,11 @@ public class UserServiceImpl implements UserService {
         User result = userRepository.findByUsername(username);
         log.info("IN findByUsername - user: {} found by username: {}", result, username);
         return result;
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 
     @Override

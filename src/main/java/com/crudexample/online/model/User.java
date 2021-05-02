@@ -1,5 +1,6 @@
 package com.crudexample.online.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -27,10 +28,10 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "picture")
+    @Column(name = "picture", columnDefinition = "default 'test'")
     private String mainPictureUrl;
 
-    @Column(name = "background")
+    @Column(name = "background", columnDefinition = "default 'test'")
     private String backgroundImageUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -40,6 +41,7 @@ public class User extends BaseEntity {
 
     private List<Role> roles;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_films",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},

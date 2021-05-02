@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
-
-
 @MappedSuperclass
 @Data
 public class BaseEntity {
