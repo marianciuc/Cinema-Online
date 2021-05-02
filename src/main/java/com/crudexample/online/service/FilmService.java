@@ -2,12 +2,20 @@ package com.crudexample.online.service;
 
 import com.crudexample.online.dto.FilmRequestDto;
 import com.crudexample.online.model.Film;
+import javassist.NotFoundException;
+
+import javax.management.BadAttributeValueExpException;
+import java.util.List;
 
 public interface FilmService {
 
-    Film addFilm(FilmRequestDto filmRequestDto);
+    Film add(FilmRequestDto filmRequestDto);
 
-    void deleteFilmById(Long id);
+    void delete(Long id);
 
-    void updateFilm(FilmRequestDto filmRequestDto);
+    Film getById(Long id);
+
+    List<Film> getAll();
+
+    Film update(Long id, FilmRequestDto filmRequestDto);
 }

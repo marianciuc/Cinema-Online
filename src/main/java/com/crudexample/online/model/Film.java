@@ -1,9 +1,12 @@
 package com.crudexample.online.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "films")
@@ -37,6 +40,13 @@ public class Film extends BaseEntity {
     @Column(name = "background")
     private String background;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "films", fetch = FetchType.LAZY)
     private List<User> users;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "genres_films",
+            joinColumns = {@JoinColumn(name = "film_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "genre_id", referencedColumnName = "id")})
+    private List<Genre> genres;
 }

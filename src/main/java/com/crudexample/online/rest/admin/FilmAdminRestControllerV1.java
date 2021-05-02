@@ -8,15 +8,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.ApiResponses;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1/admin/film/")
@@ -36,11 +31,36 @@ public class FilmAdminRestControllerV1 {
             @ApiResponse(code = 200, message = HttpStatuses.OK),
             @ApiResponse(code = 400, message = HttpStatuses.BAD_REQUEST),
             @ApiResponse(code = 403, message = HttpStatuses.FORBIDDEN),
-            @ApiResponse(code = 500, message = HttpStatuses.TOKEN_EXPIRED)
     })
     @PostMapping("add")
-    public ResponseEntity login(@Valid @RequestBody FilmRequestDto filmRequestDto) {
+    public ResponseEntity add(@Valid @RequestBody FilmRequestDto filmRequestDto) {
         return ResponseEntity.status(HttpStatus.valueOf(HttpStatuses.CREATED))
-                .body(filmService.addFilm(filmRequestDto));
+                .body(filmService.add(filmRequestDto));
     }
+
+
+    @ApiOperation(value = "Updates on film data")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = HttpStatuses.OK),
+            @ApiResponse(code = 400, message = HttpStatuses.BAD_REQUEST),
+            @ApiResponse(code = 403, message = HttpStatuses.FORBIDDEN),
+    })
+    @PostMapping("update/{id}")
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody FilmRequestDto filmRequestDto) {
+        return ResponseEntity.status(HttpStatus.valueOf(HttpStatuses.OK))
+                .body(filmService.update(id, filmRequestDto));
+    }
+
+    @ApiOperation(value = "Changing the status of a movie to DELETED")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = HttpStatuses.OK),
+            @ApiResponse(code = 400, message = HttpStatuses.BAD_REQUEST),
+            @ApiResponse(code = 403, message = HttpStatuses.FORBIDDEN),
+    })
+    @DeleteMapping("delete/{id}")
+    public void delete(@PathVariable Long id) {
+        filmService.delete(id);
+    }
+
+
 }

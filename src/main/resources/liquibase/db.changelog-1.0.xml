@@ -193,5 +193,56 @@
 <!--                                 referencedColumnNames="id"-->
 <!--                                 referencedTableName="films"/>-->
 <!--    </changeSet>-->
+<!--        <changeSet id="1.0.10" author="vladimir.marianchuk">-->
+<!--            <createTable tableName="genre">-->
+<!--                <column name="id" type="BIGINT" autoIncrement="true">-->
+<!--                    <constraints primaryKey="true" nullable="false"/>-->
+<!--                </column>-->
+
+<!--                <column name="name" type="VARCHAR(100)">-->
+<!--                    <constraints nullable="false" unique="true"/>-->
+<!--                </column>-->
+
+<!--                <column name="created" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">-->
+<!--                    <constraints nullable="false"/>-->
+<!--                </column>-->
+
+<!--                <column name="updated" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">-->
+<!--                    <constraints nullable="false"/>-->
+<!--                </column>-->
+
+<!--                <column name="status" type="VARCHAR(25)" defaultValue="ACTIVE">-->
+<!--                    <constraints nullable="false"/>-->
+<!--                </column>-->
+<!--            </createTable>-->
+<!--        </changeSet>-->
+<!--        <changeSet id="1.0.11" author="vladimir.marianchuk">-->
+<!--            <createTable tableName="genres_films">-->
+<!--                <column name="genre_id" type="BIGINT">-->
+<!--                </column>-->
+<!--                <column name="film_id" type="BIGINT">-->
+<!--                </column>-->
+<!--            </createTable>-->
+<!--        </changeSet>-->
+
+<!--        <changeSet id="1.0.12" author="vladimir.marianchuk">-->
+<!--            <addForeignKeyConstraint baseColumnNames="genre_id"-->
+<!--                                     baseTableName="genres_films"-->
+<!--                                     constraintName="fk_genre_films_user"-->
+<!--                                     onDelete="CASCADE"-->
+<!--                                     onUpdate="RESTRICT"-->
+<!--                                     referencedColumnNames="id"-->
+<!--                                     referencedTableName="genre"/>-->
+<!--        </changeSet>-->
+
+<!--        <changeSet id="1.0.13" author="vladimir.marianchuk">-->
+<!--            <addForeignKeyConstraint baseColumnNames="film_id"-->
+<!--                                     baseTableName="genres_films"-->
+<!--                                     constraintName="fk_genre_films_fil,s"-->
+<!--                                     onDelete="CASCADE"-->
+<!--                                     onUpdate="RESTRICT"-->
+<!--                                     referencedColumnNames="id"-->
+<!--                                     referencedTableName="films"/>-->
+<!--        </changeSet>-->
 
 </databaseChangeLog>

@@ -1,17 +1,22 @@
 package com.crudexample.online.service.impl;
 
 import com.crudexample.online.dto.FilmRequestDto;
+import com.crudexample.online.exceptions.IncorrectIdException;
 import com.crudexample.online.model.Film;
 import com.crudexample.online.model.FilmStatus;
 import com.crudexample.online.model.Status;
 import com.crudexample.online.repository.FilmRepository;
 import com.crudexample.online.service.FilmService;
+import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
+import javax.management.BadAttributeValueExpException;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -28,8 +33,8 @@ public class FilmServiceImpl implements FilmService {
 
 
     @Override
-    public Film addFilm( FilmRequestDto filmRequestDto) {
-        if(filmRequestDto == null){
+    public Film add(FilmRequestDto filmRequestDto) {
+        if (filmRequestDto == null) {
             throw new NullPointerException("Film data is empty");
         }
 
@@ -47,10 +52,10 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public void deleteFilmById(Long id) {
+    public void delete(Long id) {
         Film film = filmRepository.findFilmById(id);
 
-        if (film == null){
+        if (film == null) {
             log.warn("IN findById - no film found by id: {}", id);
         }
 
@@ -60,7 +65,38 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public void updateFilm(FilmRequestDto filmRequestDto) {
+    public Film getById(Long id) {
+        Optional<Film> optionalFilm = filmRepository.findById(id);
+        if (optionalFilm.isPresent()) {
+            return optionalFilm.get();
+        }
+        throw new IncorrectIdException("Id not founded");
+    }
 
+    @Override
+    public List<Film> getAll() {
+        List<Film> filmList = filmRepository.findAll();
+        log.info("founded {} films", filmList.size());
+        return filmList;
+    }
+
+    @Override
+    public Film update(Long id, FilmRequestDto filmRequestDto) {
+        Film toUpdate = filmRepository.findFilmById(id);
+
+        toUpdate.setUpdated(new Date());
+        toUpdate.setBackground(filmRequestDto.getBackground());
+        toUpdate.setPoster(filmRequestDto.getPoster());
+        toUpdate.setName(filmRequestDto.getName());
+        toUpdate.setDescription(filmRequestDto.getDescription());
+        toUpdate.setEpisodes(filmRequestDto.getEpisodes());
+        toUpdate.setKpkId(filmRequestDto.getKpkId());
+        toUpdate.setTrailer(filmRequestDto.getTrailer());
+        toUpdate.setGenres(filmRequestDto.getGenres());
+
+        filmRepository.save(toUpdate);
+
+        log.info("Film {} information has been successfully updated", filmRequestDto.getName());
+        return modelMapper.map(toUpdate, Film.class);
     }
 }
