@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         user.setCreated(new Date());
         user.setUpdated(new Date());
         user.setBackgroundImageUrl(MediaConstants.PROFILE_DEFAULT_BACKGROUND);
-        user.setMainPictureUrl(MediaConstants.MAIN_PICTURE_URL);
+        user.setMainPictureUrl("http://tinygraphs.com/squares/"+registrationRequestDto.getUsername()+"?fmt=svg");
 
         try{
             System.out.println(user);

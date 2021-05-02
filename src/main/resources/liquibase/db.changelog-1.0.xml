@@ -245,4 +245,60 @@
 <!--                                     referencedTableName="films"/>-->
 <!--        </changeSet>-->
 
+<!--            <changeSet id="1.0.14" author="vladimir.marianchuk">-->
+<!--                <createTable tableName="characters">-->
+<!--                    <column name="id" type="BIGINT" autoIncrement="true">-->
+<!--                        <constraints primaryKey="true" nullable="false"/>-->
+<!--                    </column>-->
+
+<!--                    <column name="name" type="VARCHAR(150)">-->
+<!--                        <constraints nullable="false"/>-->
+<!--                    </column>-->
+<!--                    <column name="picture" type="VARCHAR(300)">-->
+<!--                        <constraints nullable="false"/>-->
+<!--                    </column>-->
+
+
+<!--                    <column name="created" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">-->
+<!--                        <constraints nullable="false"/>-->
+<!--                    </column>-->
+
+<!--                    <column name="updated" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">-->
+<!--                        <constraints nullable="false"/>-->
+<!--                    </column>-->
+
+<!--                    <column name="status" type="VARCHAR(25)" defaultValue="ACTIVE">-->
+<!--                        <constraints nullable="false"/>-->
+<!--                    </column>-->
+<!--                </createTable>-->
+<!--            </changeSet>-->
+<!--    <changeSet id="1.0.15" author="vladimir.marianchuk">-->
+<!--                <createTable tableName="characters_films">-->
+<!--                    <column name="character_id" type="BIGINT">-->
+<!--                    </column>-->
+<!--                    <column name="film_id" type="BIGINT">-->
+<!--                    </column>-->
+<!--                </createTable>-->
+<!--            </changeSet>-->
+
+<!--            <changeSet id="1.0.16" author="vladimir.marianchuk">-->
+<!--                <addForeignKeyConstraint baseColumnNames="character_id"-->
+<!--                                         baseTableName="characters_films"-->
+<!--                                         constraintName="fk_characters_films_user"-->
+<!--                                         onDelete="CASCADE"-->
+<!--                                         onUpdate="RESTRICT"-->
+<!--                                         referencedColumnNames="id"-->
+<!--                                         referencedTableName="characters"/>-->
+<!--            </changeSet>-->
+
+<!--            <changeSet id="1.0.17" author="vladimir.marianchuk">-->
+<!--                <addForeignKeyConstraint baseColumnNames="film_id"-->
+<!--                                         baseTableName="characters_films"-->
+<!--                                         constraintName="fk_characters_films_films"-->
+<!--                                         onDelete="CASCADE"-->
+<!--                                         onUpdate="RESTRICT"-->
+<!--                                         referencedColumnNames="id"-->
+<!--                                         referencedTableName="films"/>-->
+<!--            </changeSet>-->
+
 </databaseChangeLog>

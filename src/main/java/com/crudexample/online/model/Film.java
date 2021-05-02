@@ -49,4 +49,16 @@ public class Film extends BaseEntity {
             joinColumns = {@JoinColumn(name = "film_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "genre_id", referencedColumnName = "id")})
     private List<Genre> genres;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "characters_films",
+            joinColumns = {@JoinColumn(name = "film_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "character_id", referencedColumnName = "id")})
+    private Set<Character> characters;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "comments_films",
+            joinColumns = {@JoinColumn(name = "film_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "character_id", referencedColumnName = "id")})
+    private Set<Comments> comments;
 }

@@ -1,0 +1,22 @@
+package com.crudexample.online.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Data
+@Entity
+@Table(name = "characters")
+public class Character extends BaseEntity {
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "picture")
+    private String picture;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "characters", fetch = FetchType.LAZY)
+    private List<Film> films;
+}
