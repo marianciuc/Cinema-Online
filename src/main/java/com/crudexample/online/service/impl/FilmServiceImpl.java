@@ -3,17 +3,14 @@ package com.crudexample.online.service.impl;
 import com.crudexample.online.dto.FilmRequestDto;
 import com.crudexample.online.exceptions.IncorrectIdException;
 import com.crudexample.online.model.Film;
-import com.crudexample.online.model.FilmStatus;
 import com.crudexample.online.model.Status;
 import com.crudexample.online.repository.FilmRepository;
 import com.crudexample.online.service.FilmService;
-import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.modelmapper.ModelMapper;
 
-import javax.management.BadAttributeValueExpException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

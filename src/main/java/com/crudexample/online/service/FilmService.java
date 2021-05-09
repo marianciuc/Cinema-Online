@@ -2,9 +2,7 @@ package com.crudexample.online.service;
 
 import com.crudexample.online.dto.FilmRequestDto;
 import com.crudexample.online.model.Film;
-import javassist.NotFoundException;
 
-import javax.management.BadAttributeValueExpException;
 import java.util.List;
 
 public interface FilmService {

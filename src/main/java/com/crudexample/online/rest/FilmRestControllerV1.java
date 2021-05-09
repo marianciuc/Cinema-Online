@@ -1,7 +1,6 @@
 package com.crudexample.online.rest;
 
 import com.crudexample.online.constant.HttpStatuses;
-import com.crudexample.online.dto.FilmRequestDto;
 import com.crudexample.online.repository.FilmRepository;
 import com.crudexample.online.service.FilmService;
 import io.swagger.annotations.ApiOperation;
@@ -11,9 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RequestMapping(value = "/api/v1/open/film/")
 public class FilmRestControllerV1 {
 
