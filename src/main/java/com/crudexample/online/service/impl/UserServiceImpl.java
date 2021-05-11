@@ -2,22 +2,19 @@ package com.crudexample.online.service.impl;
 
 import com.crudexample.online.constant.MediaConstants;
 import com.crudexample.online.dto.RegistrationRequestDto;
-import com.crudexample.online.dto.UserDto;
 import com.crudexample.online.exceptions.RegistrationException;
-import lombok.extern.slf4j.Slf4j;
 import com.crudexample.online.model.Role;
 import com.crudexample.online.model.Status;
 import com.crudexample.online.model.User;
 import com.crudexample.online.repository.RoleRepository;
 import com.crudexample.online.repository.UserRepository;
 import com.crudexample.online.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -39,7 +36,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
-        List<Role> userRoles = new ArrayList<>();
+        Set<Role> userRoles  = new HashSet();
         userRoles.add(roleUser);
 
         user.setUsername(registrationRequestDto.getUsername());

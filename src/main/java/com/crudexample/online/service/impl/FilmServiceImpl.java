@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -28,6 +29,21 @@ public class FilmServiceImpl implements FilmService {
         this.modelMapper = modelMapper;
     }
 
+
+    @Override
+    public Set<Film> getLastReleased() {
+        return filmRepository.findFirst6ByOrderByCreatedDesc();
+    }
+
+    @Override
+    public Set<Film> findByName(String name) {
+        return filmRepository.findByNameContainingOrderByName(name);
+    }
+
+    @Override
+    public Set<Film> getMostPopular() {
+        return filmRepository.findFirst6ByOrderByVotesDesc();
+    }
 
     @Override
     public Film add(FilmRequestDto filmRequestDto) {

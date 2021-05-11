@@ -41,7 +41,7 @@ public class Film extends BaseEntity {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "films", fetch = FetchType.LAZY)
-    private List<User> users;
+    private Set<User> users;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "genres_films",
@@ -56,9 +56,6 @@ public class Film extends BaseEntity {
     private Set<Character> characters;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "episodes_films",
-            joinColumns = {@JoinColumn(name = "film_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "episode_id", referencedColumnName = "id")})
-    private Set<Episode> episodesData;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "film", orphanRemoval = true)
+    private List<Episode> episodesData;
 }

@@ -4,8 +4,15 @@ import com.crudexample.online.dto.FilmRequestDto;
 import com.crudexample.online.model.Film;
 
 import java.util.List;
+import java.util.Set;
 
 public interface FilmService {
+
+    Set<Film> getLastReleased();
+
+    Set<Film> findByName(String name);
+
+    Set<Film> getMostPopular();
 
     Film add(FilmRequestDto filmRequestDto);
 

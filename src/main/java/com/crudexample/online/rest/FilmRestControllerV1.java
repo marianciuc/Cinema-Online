@@ -35,6 +35,42 @@ public class FilmRestControllerV1 {
                 .body(filmService.getById(id));
     }
 
+
+    @ApiOperation(value = "Search for a movie by id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = HttpStatuses.OK),
+            @ApiResponse(code = 400, message = HttpStatuses.BAD_REQUEST),
+    })
+    @GetMapping("/name/{name}")
+    public ResponseEntity findByName(@PathVariable String name) {
+        return ResponseEntity.status(HttpStatus.valueOf(HttpStatuses.OK))
+                .body(filmService.findByName(name));
+    }
+
+    @ApiOperation(value = "Getting all films")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = HttpStatuses.OK),
+            @ApiResponse(code = 400, message = HttpStatuses.BAD_REQUEST),
+            @ApiResponse(code = 403, message = HttpStatuses.FORBIDDEN),
+    })
+    @GetMapping("getLastReleased")
+    public ResponseEntity getLastReleased() {
+        return ResponseEntity.status(HttpStatus.valueOf(HttpStatuses.OK))
+                .body(filmService.getLastReleased());
+    }
+
+    @ApiOperation(value = "Getting most popular films")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = HttpStatuses.OK),
+            @ApiResponse(code = 400, message = HttpStatuses.BAD_REQUEST),
+            @ApiResponse(code = 403, message = HttpStatuses.FORBIDDEN),
+    })
+    @GetMapping("getMostPopular")
+    public ResponseEntity getMostPopular() {
+        return ResponseEntity.status(HttpStatus.valueOf(HttpStatuses.OK))
+                .body(filmService.getMostPopular());
+    }
+
     @ApiOperation(value = "Getting all films")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = HttpStatuses.OK),

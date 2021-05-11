@@ -3,14 +3,7 @@ package com.crudexample.online.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import java.util.List;
+import javax.persistence.*;
 import java.util.Set;
 
 
@@ -40,7 +33,7 @@ public class User extends BaseEntity {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
 
-    private List<Role> roles;
+    private Set<Role> roles;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)

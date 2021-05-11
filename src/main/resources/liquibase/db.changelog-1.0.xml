@@ -301,61 +301,61 @@
     <!--                                         referencedTableName="films"/>-->
     <!--            </changeSet>-->
 
-    <changeSet id="1.0.19" author="vladimir.marianchuk">
-        <createTable tableName="episodes_films">
-            <column name="episode_id" type="BIGINT">
-            </column>
-            <column name="film_id" type="BIGINT">
-            </column>
-        </createTable>
-    </changeSet>
+<!--    <changeSet id="1.0.19" author="vladimir.marianchuk">-->
+<!--        <createTable tableName="episodes_films">-->
+<!--            <column name="episode_id" type="BIGINT">-->
+<!--            </column>-->
+<!--            <column name="film_id" type="BIGINT">-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
-    <changeSet id="1.0.20" author="vladimir.marianchuk">
-        <createTable tableName="episodes">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
+<!--    <changeSet id="1.0.20" author="vladimir.marianchuk">-->
+<!--        <createTable tableName="episodes">-->
+<!--            <column name="id" type="BIGINT" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="number" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="src" type="VARCHAR(300)">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="number" type="INT">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="src" type="VARCHAR(300)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
 
 
-            <column name="created" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="created" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="updated" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="updated" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="status" type="VARCHAR(25)" defaultValue="ACTIVE">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
+<!--            <column name="status" type="VARCHAR(25)" defaultValue="ACTIVE">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
-    <changeSet id="1.0.22" author="vladimir.marianchuk">
-        <addForeignKeyConstraint baseColumnNames="episode_id"
-                                 baseTableName="episodes_films"
-                                 constraintName="fk_episodes_films_episodes"
-                                 onDelete="CASCADE"
-                                 onUpdate="RESTRICT"
-                                 referencedColumnNames="id"
-                                 referencedTableName="episodes"/>
-    </changeSet>
+<!--    <changeSet id="1.0.22" author="vladimir.marianchuk">-->
+<!--        <addForeignKeyConstraint baseColumnNames="episode_id"-->
+<!--                                 baseTableName="episodes_films"-->
+<!--                                 constraintName="fk_episodes_films_episodes"-->
+<!--                                 onDelete="CASCADE"-->
+<!--                                 onUpdate="RESTRICT"-->
+<!--                                 referencedColumnNames="id"-->
+<!--                                 referencedTableName="episodes"/>-->
+<!--    </changeSet>-->
 
-    <changeSet id="1.0.23" author="vladimir.marianchuk">
-        <addForeignKeyConstraint baseColumnNames="film_id"
-                                 baseTableName="episodes_films"
-                                 constraintName="fk_episodes_films_films"
-                                 onDelete="CASCADE"
-                                 onUpdate="RESTRICT"
-                                 referencedColumnNames="id"
-                                 referencedTableName="films"/>
-    </changeSet>
+<!--    <changeSet id="1.0.23" author="vladimir.marianchuk">-->
+<!--        <addForeignKeyConstraint baseColumnNames="film_id"-->
+<!--                                 baseTableName="episodes_films"-->
+<!--                                 constraintName="fk_episodes_films_films"-->
+<!--                                 onDelete="CASCADE"-->
+<!--                                 onUpdate="RESTRICT"-->
+<!--                                 referencedColumnNames="id"-->
+<!--                                 referencedTableName="films"/>-->
+<!--    </changeSet>-->
 
 </databaseChangeLog>

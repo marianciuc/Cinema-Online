@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "genre")
@@ -16,5 +16,5 @@ public class Genre extends BaseEntity {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
-    private List<Film> films;
+    private Set<Film> films;
 }
