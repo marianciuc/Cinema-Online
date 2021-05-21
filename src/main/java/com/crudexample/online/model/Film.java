@@ -5,7 +5,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "films")
@@ -41,19 +40,13 @@ public class Film extends BaseEntity {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "films", fetch = FetchType.LAZY)
-    private Set<User> users;
+    private List<User> users;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "genres_films",
             joinColumns = {@JoinColumn(name = "film_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "genre_id", referencedColumnName = "id")})
     private List<Genre> genres;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "characters_films",
-            joinColumns = {@JoinColumn(name = "film_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "character_id", referencedColumnName = "id")})
-    private Set<Character> characters;
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "film", orphanRemoval = true)

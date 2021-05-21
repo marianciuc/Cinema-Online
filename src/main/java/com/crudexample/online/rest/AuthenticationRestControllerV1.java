@@ -1,6 +1,7 @@
 package com.crudexample.online.rest;
 
 import com.crudexample.online.dto.AuthenticationRequestDto;
+import com.crudexample.online.dto.MessageResponseDto;
 import com.crudexample.online.dto.RegistrationRequestDto;
 import com.crudexample.online.service.AuthenticationService;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping(value = "/api/v1/auth/")
 public class AuthenticationRestControllerV1 {
 
@@ -20,8 +21,13 @@ public class AuthenticationRestControllerV1 {
     }
 
     @PostMapping("register")
-    public void register(@RequestBody RegistrationRequestDto registrationRequestDto) {
+    public ResponseEntity register(@RequestBody RegistrationRequestDto registrationRequestDto) {
         authenticationService.register(registrationRequestDto);
+
+        MessageResponseDto messageResponseDto = new MessageResponseDto();
+        messageResponseDto.setMessage("Successful register");
+
+        return ResponseEntity.ok().body(messageResponseDto);
     }
 
     @PostMapping("login")

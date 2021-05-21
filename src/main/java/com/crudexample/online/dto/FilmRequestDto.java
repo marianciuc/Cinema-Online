@@ -1,6 +1,5 @@
 package com.crudexample.online.dto;
 
-import com.crudexample.online.model.Genre;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
@@ -16,5 +15,5 @@ public class FilmRequestDto {
     private String background;
     private String description;
     private Integer episodes;
-    private List<Genre> genres;
+    private List<Long> genresIds;
 }

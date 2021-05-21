@@ -3,6 +3,7 @@ package com.crudexample.online.service.impl;
 import com.crudexample.online.constant.MediaConstants;
 import com.crudexample.online.dto.RegistrationRequestDto;
 import com.crudexample.online.exceptions.RegistrationException;
+import com.crudexample.online.model.Film;
 import com.crudexample.online.model.Role;
 import com.crudexample.online.model.Status;
 import com.crudexample.online.model.User;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
-        Set<Role> userRoles  = new HashSet();
+        List<Role> userRoles  = new ArrayList<>();
         userRoles.add(roleUser);
 
         user.setUsername(registrationRequestDto.getUsername());
@@ -50,7 +51,6 @@ public class UserServiceImpl implements UserService {
         user.setMainPictureUrl("http://tinygraphs.com/squares/"+registrationRequestDto.getUsername()+"?fmt=svg");
 
         try{
-            System.out.println(user);
             userRepository.save(user);
             return user;
         }catch (RegistrationException e){
@@ -60,9 +60,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        List<User> result = userRepository.findAll();
-        log.info("IN getAll - {} users found", result.size());
-        return result;
+        return userRepository.findAll();
     }
 
     @Override
@@ -88,6 +86,29 @@ public class UserServiceImpl implements UserService {
 
         log.info("IN findById - user: {} found by id: {}", result);
         return result;
+    }
+
+    @Override
+    public void deleteFilmFromList(String username, Long id) {
+        User user = userRepository.findByUsername(username);
+
+        Set<Film> filmList = user.getFilms();
+
+        for (Film film : filmList) {
+            if (film.getId().equals(id)){
+                filmList.remove(film);
+            }
+        }
+        user.setFilms(filmList);
+        userRepository.save(user);
+    }
+
+    @Override
+    public Set<Film> getUsersFilms(String username) {
+        User user = userRepository.findByUsername(username);
+
+        Set<Film> filmList = user.getFilms();
+        return filmList;
     }
 
     @Override

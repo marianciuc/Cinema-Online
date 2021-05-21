@@ -9,9 +9,9 @@ public interface FilmRepository extends JpaRepository<Film, Long> {
 
     Film findFilmById(Long id);
 
-    Set<Film> findFirst6ByOrderByVotesDesc();
+    Set<Film> findFirst8ByOrderByVotesDesc();
 
     Set<Film> findByNameContainingOrderByName(String name);
 
-    Set<Film> findFirst6ByOrderByCreatedDesc();
+    Set<Film> findFirst8ByOrderByCreatedDesc();
 }

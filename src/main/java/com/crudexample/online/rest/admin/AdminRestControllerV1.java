@@ -1,15 +1,13 @@
 package com.crudexample.online.rest.admin;
 
+import com.crudexample.online.constant.HttpStatuses;
 import com.crudexample.online.dto.AdminUserDto;
 import com.crudexample.online.model.User;
 import com.crudexample.online.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -35,4 +33,12 @@ public class AdminRestControllerV1 {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping(value = "users/GET_ALL")
+    @CrossOrigin(origins = "*", maxAge = 3600, methods = {RequestMethod.GET, RequestMethod.OPTIONS})
+    public ResponseEntity getAll() {
+        return ResponseEntity.status(HttpStatus.valueOf(HttpStatuses.OK))
+                .body(userService.getAll());
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.crudexample.online.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -16,7 +15,6 @@ public class Role extends BaseEntity {
     private String name;
 
     @JsonIgnore
-    @JsonBackReference
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Set<User> users;
 

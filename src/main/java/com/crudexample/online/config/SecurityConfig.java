@@ -5,6 +5,7 @@ import com.crudexample.online.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,13 +14,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     private final JwtTokenProvider jwtTokenProvider;
 
     private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/**";
     private static final String NO_LOGIN_ENDPOINT = "/api/v1/open/**";
+    private static final String ALL_ENDPOINT = "/**";
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
@@ -42,6 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, ALL_ENDPOINT).permitAll()
+                .antMatchers(HttpMethod.GET, ALL_ENDPOINT).permitAll()
+                .antMatchers(HttpMethod.POST, ALL_ENDPOINT).permitAll()
+                .antMatchers(HttpMethod.DELETE, ALL_ENDPOINT).permitAll()
                 .antMatchers(LOGIN_ENDPOINT, NO_LOGIN_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
