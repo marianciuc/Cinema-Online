@@ -3,6 +3,7 @@ package com.crudexample.online.service;
 import com.crudexample.online.dto.RegistrationRequestDto;
 import com.crudexample.online.model.Film;
 import com.crudexample.online.model.User;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Set;
@@ -14,6 +15,8 @@ public interface UserService {
     List<User> getAll();
 
     User findByUsername(String username);
+
+    ResponseEntity changePassword(String oldPassword, String newPassword);
 
     boolean existsByUsername(String username);
 

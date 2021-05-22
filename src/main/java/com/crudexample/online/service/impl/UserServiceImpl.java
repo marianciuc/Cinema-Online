@@ -9,9 +9,15 @@ import com.crudexample.online.model.Status;
 import com.crudexample.online.model.User;
 import com.crudexample.online.repository.RoleRepository;
 import com.crudexample.online.repository.UserRepository;
+import com.crudexample.online.security.jwt.JwtUser;
 import com.crudexample.online.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +43,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
-        List<Role> userRoles  = new ArrayList<>();
+        List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
 
         user.setUsername(registrationRequestDto.getUsername());
@@ -48,12 +54,12 @@ public class UserServiceImpl implements UserService {
         user.setCreated(new Date());
         user.setUpdated(new Date());
         user.setBackgroundImageUrl(MediaConstants.PROFILE_DEFAULT_BACKGROUND);
-        user.setMainPictureUrl("http://tinygraphs.com/squares/"+registrationRequestDto.getUsername()+"?fmt=svg");
+        user.setMainPictureUrl("http://tinygraphs.com/squares/" + registrationRequestDto.getUsername() + "?fmt=svg");
 
-        try{
+        try {
             userRepository.save(user);
             return user;
-        }catch (RegistrationException e){
+        } catch (RegistrationException e) {
             throw new RegistrationException(e.getMessage());
         }
     }
@@ -68,6 +74,18 @@ public class UserServiceImpl implements UserService {
         User result = userRepository.findByUsername(username);
         log.info("IN findByUsername - user: {} found by username: {}", result, username);
         return result;
+    }
+
+    @Override
+    public ResponseEntity changePassword(String oldPassword, String newPassword) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName());
+
+        if (user != null && passwordEncoder.matches(oldPassword, user.getPassword())){
+            user.setPassword(passwordEncoder.encode(newPassword));
+            return ResponseEntity.ok().body("Successful password change");
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid password");
     }
 
     @Override
@@ -95,7 +113,7 @@ public class UserServiceImpl implements UserService {
         Set<Film> filmList = user.getFilms();
 
         for (Film film : filmList) {
-            if (film.getId().equals(id)){
+            if (film.getId().equals(id)) {
                 filmList.remove(film);
             }
         }
