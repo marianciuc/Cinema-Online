@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EpisodeDto {
-    private Film film;
     private String src;
     private Number number;
 }
