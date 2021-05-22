@@ -97,6 +97,11 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
+    public void save(Film film) {
+        filmRepository.save(film);
+    }
+
+    @Override
     public void rate(Long id, Integer mark) {
         Optional<Film> optionalFilm = filmRepository.findById(id);
 

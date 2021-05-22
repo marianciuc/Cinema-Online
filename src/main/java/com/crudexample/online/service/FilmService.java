@@ -22,6 +22,8 @@ public interface FilmService {
 
     List<Film> getAll();
 
+    void save(Film film);
+
     void rate(Long id, Integer mark);
 
     Film update(Long id, FilmRequestDto filmRequestDto);
