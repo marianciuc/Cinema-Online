@@ -20,7 +20,7 @@ public class MapperConfig {
                 .getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT)
                 .setFieldMatchingEnabled(true)
-                .setSkipNullEnabled(true)
+                .setSkipNullEnabled(false)
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
 
         return modelMapper;
