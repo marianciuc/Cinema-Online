@@ -7,13 +7,12 @@ import com.crudexample.online.model.Film;
 import com.crudexample.online.model.Role;
 import com.crudexample.online.model.Status;
 import com.crudexample.online.model.User;
+import com.crudexample.online.repository.FilmRepository;
 import com.crudexample.online.repository.RoleRepository;
 import com.crudexample.online.repository.UserRepository;
-import com.crudexample.online.security.jwt.JwtUser;
 import com.crudexample.online.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,7 +20,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -30,12 +32,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final FilmRepository filmRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, FilmRepository filmRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.filmRepository = filmRepository;
     }
 
     @Override
@@ -86,6 +90,24 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.ok().body("Successful password change");
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid password");
+    }
+
+    @Override
+    public ResponseEntity addFilmToList(Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName());
+
+        Film film = filmRepository.findFilmById(id);
+        if (film != null && user != null){
+            Set<Film> filmList = user.getFilms();
+
+            filmList.add(film);
+            user.setFilms(filmList);
+            userRepository.save(user);
+
+            return ResponseEntity.status(HttpStatus.OK).body("Added");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not founded");
     }
 
     @Override

@@ -6,9 +6,6 @@ import com.crudexample.online.repository.FilmRepository;
 import com.crudexample.online.security.jwt.JwtTokenProvider;
 import com.crudexample.online.service.FilmService;
 import com.crudexample.online.service.UserService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,19 +30,6 @@ public class FilmUserRestControllerV1 {
 
     private FilmRepository filmRepository;
 
-    @ApiOperation(value = "User rating of a movie")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = HttpStatuses.OK),
-            @ApiResponse(code = 400, message = HttpStatuses.BAD_REQUEST),
-            @ApiResponse(code = 403, message = HttpStatuses.FORBIDDEN)
-    })
-    @PostMapping("{id}/{mark}")
-    public void rate(@PathVariable Long id, @PathVariable Integer mark) {
-        filmService.rate(id, mark);
-    }
-
-
-
     @GetMapping("GET_USER_FILMS")
     public ResponseEntity getUserFilms(HttpServletRequest req) {
 
@@ -53,6 +37,11 @@ public class FilmUserRestControllerV1 {
 
         return ResponseEntity.status(HttpStatus.valueOf(HttpStatuses.OK))
                 .body(userService.getUsersFilms(username));
+    }
+
+    @RequestMapping("ADD_TO_VIEWED_LIST/{id}")
+    public ResponseEntity addFilmToList(@PathVariable Long id) {
+        return userService.addFilmToList(id);
     }
 
     @PostMapping("DELETE_FROM_LIST/{id}")

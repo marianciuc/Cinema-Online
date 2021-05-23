@@ -18,6 +18,8 @@ public interface UserService {
 
     ResponseEntity changePassword(String oldPassword, String newPassword);
 
+    ResponseEntity addFilmToList(Long id);
+
     boolean existsByUsername(String username);
 
     User findById(Long id);

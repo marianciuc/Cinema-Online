@@ -5,11 +5,17 @@ import com.crudexample.online.exceptions.IncorrectIdException;
 import com.crudexample.online.model.Film;
 import com.crudexample.online.model.Genre;
 import com.crudexample.online.model.Status;
+import com.crudexample.online.model.User;
 import com.crudexample.online.repository.FilmRepository;
 import com.crudexample.online.repository.GenreRepository;
 import com.crudexample.online.service.FilmService;
+import com.crudexample.online.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,12 +26,14 @@ public class FilmServiceImpl implements FilmService {
     private FilmRepository filmRepository;
     private ModelMapper modelMapper;
     private GenreRepository genreRepository;
+    private UserService userService;
 
     @Autowired
-    public FilmServiceImpl(FilmRepository filmRepository, ModelMapper modelMapper, GenreRepository genreRepository) {
+    public FilmServiceImpl(FilmRepository filmRepository, ModelMapper modelMapper, GenreRepository genreRepository, UserService userService) {
         this.filmRepository = filmRepository;
         this.modelMapper = modelMapper;
         this.genreRepository = genreRepository;
+        this.userService = userService;
     }
 
 
@@ -61,9 +69,9 @@ public class FilmServiceImpl implements FilmService {
         List<Long> idList = filmRequestDto.getGenresIds();
 
 
-        for (Long value: idList) {
+        for (Long value : idList) {
             Optional<Genre> temp = genreRepository.findById(value);
-            if (temp.isPresent()){
+            if (temp.isPresent()) {
                 genreList.add(temp.get());
             }
         }
@@ -88,6 +96,23 @@ public class FilmServiceImpl implements FilmService {
             return optionalFilm.get();
         }
         throw new IncorrectIdException("Id not founded");
+    }
+
+    @Override
+    public ResponseEntity getStatus(Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByUsername(authentication.getName());
+
+        Film film = filmRepository.findFilmById(id);
+
+        if (user != null && film != null) {
+            for (User _u : film.getUsers()){
+                if (_u.getId() == user.getId()){
+                    return ResponseEntity.status(HttpStatus.OK).body("Founded");
+                }
+            }
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not founded");
     }
 
     @Override
@@ -134,11 +159,11 @@ public class FilmServiceImpl implements FilmService {
         List<Long> idList = filmRequestDto.getGenresIds();
 
 
-        for (Long value: idList) {
-           Optional<Genre> temp = genreRepository.findById(value);
-           if (temp.isPresent()){
-               genreList.add(temp.get());
-           }
+        for (Long value : idList) {
+            Optional<Genre> temp = genreRepository.findById(value);
+            if (temp.isPresent()) {
+                genreList.add(temp.get());
+            }
         }
 
         toUpdate.setGenres(genreList);

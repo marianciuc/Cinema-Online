@@ -28,8 +28,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<Genre> getAll() {
-        genreRepository.findAll();
-        return null;
+        return genreRepository.findAll();
     }
 
     @Override
