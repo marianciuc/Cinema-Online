@@ -1,0 +1,102 @@
+.comments {
+    border-top: rgba(196, 181, 123, 0.29) 1px solid;
+    width: 1625px;
+    margin: auto;
+}
+
+.comments h1 {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 300;
+    font-family: Roboto;
+    margin-top: 40px;
+    margin-bottom: 19px;
+}
+
+.comments textarea {
+    border: none;
+    width: 912px;
+    height: 195px;
+    max-width: 912px;
+    max-height: 195px;
+    min-height: 195px;
+    max-width: 912px;
+    border-radius: 6px;
+    background-color: #182131;
+    font-size: 24px;
+    padding: 20px;
+    font-weight: 500;
+    color: #b9bcc1;
+}
+
+.comment {
+    display: flex;
+}
+
+.hint-label {
+    margin-left: 66px;
+}
+
+.hint-icon {
+    margin-bottom: 4px;
+}
+
+.hint-text {
+    margin-left: 66px;
+    color: #eeeeee;
+    letter-spacing: 0.09px;
+    font-size: 22px;
+    width: 647px;
+    font-weight: 300;
+}
+
+.comments .label {
+    color: #eeeeee;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0.11px;
+    height: 26px;
+}
+
+.optional {
+    margin: auto;
+    width: 1625px;
+}
+
+.comments .button {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    float: right;
+    width: 200px;
+    height: 60px;
+    border: 1px solid #ffbb00;
+    border-radius: 6px;
+    font-weight: 400;
+    font-size: 22px;
+    text-align: center;
+    color: #ffbb00;
+    margin-bottom: 90px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+textarea:focus {
+    border: 1px solid #1670BE;
+    box-shadow: 0 0 3px #1670BE;
+    outline-offset: 0px;
+    outline: none;
+}
+.comments .button:hover {
+    background-color: #ffbb00;
+    color: #020916;
+}
+
+.comment-box {
+    height: auto;
+    width: 1644px;
+    min-height: 139px;
+    background-color: #182131;
+    margin-bottom: 32px;
+}

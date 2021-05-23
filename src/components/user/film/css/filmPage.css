@@ -1,0 +1,198 @@
+.main-film {
+    height: 800px;
+    width: 100% !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 89px 0px 89px 0px;
+}
+
+.default-container {
+    width: 1300px;
+    display: flex;
+    margin: auto;
+    align-content: flex-start;
+}
+
+.poster {
+    display: inline-block;
+    width: 284px;
+    height: 475px;
+}
+.poster img{
+    width: 350px;
+    height: 500px;
+    object-fit: fill;
+}
+
+.buttons-group {
+    width: 350px;
+    height: 49px;
+    background-color: rgba(48, 54, 61, 0.63);
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+.buttons-group .button {
+    display: inline-block;
+    padding: 0px  23px;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    transition: 0.2s ease-in-out;
+}
+
+.buttons-group .button:hover {
+    background-color: #30363D;
+}
+
+.buttons-group .active {
+    background-color: #30363D;
+}
+
+._genre {
+    height: 20px;
+    font-size: 13px;
+    margin-right: 5px;
+    background-color: #d0d0d0 !important;
+}
+.film-data {
+    height: 536px;
+    margin-left: 140px;
+    margin-top: 10px;
+    width: 700px;
+    flex-wrap: nowrap;
+}
+
+.film-data h1 {
+    height: 77px;
+    font-family: Roboto;
+    color: #eeeeee;
+    font-size: 58px;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: 0.23px;
+    line-height: normal;
+}
+
+.film-data h2 {
+    margin-top: -27px;
+    margin-left: 0;
+    display: inline-block;
+    height: 24px;
+    font-size: 20px !important;
+    display: flex;
+    font-family: Roboto;
+    color: #b3b3b3;
+    font-weight: 200;
+    align-items: stretch;
+}
+
+.MuiRating-iconEmpty {
+    color: #9c9c9c !important;
+}
+
+
+.yt-icon {
+    padding-top: 10px;
+    width: 50px !important;
+    height: 50px !important;
+    color: white;
+    margin-left: 29px;
+}
+
+.film-data h3 {
+    display: inline-block;
+    font-family: Roboto;
+    margin-bottom: -20px;
+    color: #dbdada;
+    font-size: 30px !important;
+    letter-spacing: 0.18px;
+    font-weight: 500;
+    margin-top: 25px;
+}
+
+
+.synopsis {
+    opacity: 0.9;
+    width: 100%;
+    color: #c4c4c4;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.film-data .genres h4 {
+    margin-top: 26px;
+    height: 33px;
+    font-size: 25px;
+    font-weight: 500;
+    color: white;
+    font-family: Roboto;
+}
+
+.film-data .genres p {
+    font-size: 25px;
+    font-weight: 300;
+    color: #ffffff;
+}
+
+.tabs {
+    display: flex;
+    align-items: center;
+    color: white;
+    height: 89px;
+    border-bottom: rgba(196, 181, 123, 0.29) 1px solid;
+}
+
+.tabs .tab {
+    letter-spacing: -0.73px;
+    font-size: 28px;
+    margin-right: 100px;
+    cursor: pointer;
+    height: 89px;
+    padding-top: 24px;
+}
+
+.tabs .tab:hover {
+    color: #ffbb00;
+    transition: 0.1s ease-in-out;
+    border-bottom:  #ffbb00 1px solid;
+}
+
+
+.youtube-button {
+    display: flex;
+    width: 220px;
+    border-radius: 6px;
+    color: #e0dfdf;
+    background: linear-gradient(130.16deg, rgba(80, 90, 221, 0.58) 34.4%, rgba(190, 64, 192, 0.5) 66.11%, rgba(251, 168, 43, 0.5) 96.37%);
+    padding: 11px 10px;
+    height: 30px;
+    line-height: 13px;
+    font-size: 13px;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    transition: 0.5s ease-in-out;
+}
+
+
+.youtube-button:hover {
+    text-decoration: none;
+    color: #e7e9ef;
+    transition: 0.5s ease-in-out background-color;
+    background: linear-gradient(130.16deg,#505add 34.4%,#be40c0 66.11%,#fba82b 96.37%);
+}
+
+.icon_youtube {
+    width: 30px !important;
+    height: 20px !important;
+}
