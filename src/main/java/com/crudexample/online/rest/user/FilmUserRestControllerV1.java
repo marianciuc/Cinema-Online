@@ -45,6 +45,11 @@ public class FilmUserRestControllerV1 {
     }
 
 
+    @PostMapping("/ADD_TO_VIEWED_LIST/{id}")
+    public void addToList(@PathVariable Long id){
+        userService.addFilmToList(id);
+    }
+
 
     @GetMapping("GET_USER_FILMS")
     public ResponseEntity getUserFilms(HttpServletRequest req) {
