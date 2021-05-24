@@ -98,7 +98,6 @@ public class FilmServiceImpl implements FilmService {
         throw new IncorrectIdException("Id not founded");
     }
 
-    @Override
     public ResponseEntity getStatus(Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByUsername(authentication.getName());

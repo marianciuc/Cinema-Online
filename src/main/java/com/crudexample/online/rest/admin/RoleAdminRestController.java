@@ -2,7 +2,6 @@ package com.crudexample.online.rest.admin;
 
 import com.crudexample.online.dto.RoleDto;
 import com.crudexample.online.service.RoleService;
-import com.crudexample.online.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,12 @@ public class RoleAdminRestController {
     @Autowired
     private RoleService roleService;
 
-    @DeleteMapping("delete/{id}")
+    @GetMapping("get")
+    public ResponseEntity get(){
+        return roleService.getAll();
+    }
+
+    @PostMapping("delete/{id}")
     public void delete(@PathVariable Long id) {
         roleService.delete(id);
     }

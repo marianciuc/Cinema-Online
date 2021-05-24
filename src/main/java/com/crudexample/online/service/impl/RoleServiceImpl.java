@@ -5,7 +5,6 @@ import com.crudexample.online.model.Role;
 import com.crudexample.online.model.Status;
 import com.crudexample.online.repository.RoleRepository;
 import com.crudexample.online.service.RoleService;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -37,6 +36,7 @@ public class RoleServiceImpl implements RoleService {
 
         if (role.isPresent()){
             role.get().setName(roleDto.getName());
+            roleRepository.save(role.get());
             return ResponseEntity.ok().body("Successful changed");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not founded");
@@ -56,5 +56,10 @@ public class RoleServiceImpl implements RoleService {
         } catch (Exception exception){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Role already exist");
         }
+    }
+
+    @Override
+    public ResponseEntity getAll() {
+        return ResponseEntity.ok().body(roleRepository.findAll());
     }
 }

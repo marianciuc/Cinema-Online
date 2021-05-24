@@ -17,8 +17,9 @@ public interface UserService {
     User findByUsername(String username);
 
     ResponseEntity changePassword(String oldPassword, String newPassword);
-
     ResponseEntity addFilmToList(Long id);
+    ResponseEntity deleteRoleFromUser(Long roleId, Long userID);
+    ResponseEntity addRoleUser(Long roleId, Long userID);
 
     boolean existsByUsername(String username);
 

@@ -28,8 +28,18 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<Genre> getAll() {
-        genreRepository.findAll();
-        return null;
+        return genreRepository.findAll();
+    }
+
+    @Override
+    public ResponseEntity delete(Long id) {
+        Optional<Genre> genre = genreRepository.findById(id);
+
+        if (genre.isPresent()){
+            genreRepository.delete(genre.get());
+            return ResponseEntity.status(HttpStatus.OK).body("ok");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("NOT_FOUND");
     }
 
     @Override

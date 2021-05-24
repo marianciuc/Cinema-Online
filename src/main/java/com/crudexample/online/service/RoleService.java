@@ -7,4 +7,5 @@ public interface RoleService {
     void delete(Long id);
     ResponseEntity update(Long id, RoleDto roleDto);
     ResponseEntity create(RoleDto roleDto);
+    ResponseEntity getAll();
 }

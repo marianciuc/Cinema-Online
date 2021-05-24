@@ -20,10 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -108,6 +105,40 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.status(HttpStatus.OK).body("Added");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not founded");
+    }
+
+    @Override
+    public ResponseEntity deleteRoleFromUser(Long roleId, Long userID) {
+        Optional<User> user = userRepository.findById(userID);
+        Optional<Role> role = roleRepository.findById(roleId);
+
+        if (user.isPresent() && role.isPresent()){
+            for (Role _role:user.get().getRoles()) {
+                if (_role.getId() == roleId){
+                    List<Role> roleList = user.get().getRoles();
+                    roleList.remove(_role);
+
+                    user.get().setRoles(roleList);
+                    ResponseEntity.status(HttpStatus.OK).body(userRepository.save(user.get()));
+                }
+            }
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error");
+    }
+
+    @Override
+    public ResponseEntity addRoleUser(Long roleId, Long userID) {
+        Optional<User> user = userRepository.findById(userID);
+        Optional<Role> role = roleRepository.findById(roleId);
+
+        if (user.isPresent() && role.isPresent()){
+            List<Role> roleList = user.get().getRoles();
+            roleList.add(role.get());
+
+            user.get().setRoles(roleList);
+            ResponseEntity.status(HttpStatus.OK).body(userRepository.save(user.get()));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error");
     }
 
     @Override
