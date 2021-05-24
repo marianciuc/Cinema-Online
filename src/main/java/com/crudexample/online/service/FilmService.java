@@ -2,7 +2,6 @@ package com.crudexample.online.service;
 
 import com.crudexample.online.dto.FilmRequestDto;
 import com.crudexample.online.model.Film;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Set;
@@ -20,8 +19,6 @@ public interface FilmService {
     void delete(Long id);
 
     Film getById(Long id);
-
-    ResponseEntity getStatus(Long id);
 
     List<Film> getAll();
 

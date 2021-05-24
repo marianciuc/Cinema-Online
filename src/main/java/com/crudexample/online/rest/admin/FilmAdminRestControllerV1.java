@@ -12,7 +12,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api/v1/admin/film/")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class FilmAdminRestControllerV1 {
 
     private FilmService filmService;
