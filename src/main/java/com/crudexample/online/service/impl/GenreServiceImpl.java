@@ -33,17 +33,6 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public ResponseEntity delete(Long id) {
-        Optional<Genre> genre = genreRepository.findById(id);
-
-        if (genre.isPresent()){
-            genreRepository.delete(genre.get());
-            return ResponseEntity.status(HttpStatus.OK).body("ok");
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("NOT_FOUND");
-    }
-
-    @Override
     public ResponseEntity create(GenreDto genreDto) {
         Optional<Genre> optional = Optional.ofNullable(genreRepository.findOneByName(genreDto.getName()));
 

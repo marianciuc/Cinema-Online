@@ -16,11 +16,6 @@ public class GenreAdminRestController {
     @Autowired
     private GenreService genreService;
 
-    @PostMapping("delete/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
-        return genreService.delete(id);
-    }
-
     @PostMapping("add")
     public ResponseEntity add(@Valid @RequestBody GenreDto genreDto) {
         return genreService.create(genreDto);

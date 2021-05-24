@@ -10,7 +10,6 @@ public interface GenreService {
 
     List<Genre> getAll();
 
-    ResponseEntity delete(Long id);
     ResponseEntity create(GenreDto genreDto);
 
     ResponseEntity update(GenreDto genreDto, Long id);

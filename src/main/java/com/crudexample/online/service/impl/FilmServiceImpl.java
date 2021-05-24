@@ -85,7 +85,8 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public void delete(Long id) {
         Film film = filmRepository.findFilmById(id);
-        filmRepository.delete(film);
+        film.setStatus(Status.DELETED);
+        filmRepository.save(film);
     }
 
     @Override
@@ -149,8 +150,23 @@ public class FilmServiceImpl implements FilmService {
         toUpdate.setBackground(filmRequestDto.getBackground());
         toUpdate.setPoster(filmRequestDto.getPoster());
         toUpdate.setName(filmRequestDto.getName());
+        toUpdate.setDescription(filmRequestDto.getDescription());
         toUpdate.setEpisodes(filmRequestDto.getEpisodes());
+        toUpdate.setKpkId(filmRequestDto.getKpkId());
         toUpdate.setTrailer(filmRequestDto.getTrailer());
+
+        List<Genre> genreList = new ArrayList<>();
+        List<Long> idList = filmRequestDto.getGenresIds();
+
+
+        for (Long value : idList) {
+            Optional<Genre> temp = genreRepository.findById(value);
+            if (temp.isPresent()) {
+                genreList.add(temp.get());
+            }
+        }
+
+        toUpdate.setGenres(genreList);
 
         filmRepository.save(toUpdate);
         return modelMapper.map(toUpdate, Film.class);
