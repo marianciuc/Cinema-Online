@@ -20,10 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -85,8 +82,9 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByUsername(authentication.getName());
 
-        if (user != null && passwordEncoder.matches(oldPassword, user.getPassword())){
+        if (user != null && passwordEncoder.matches(oldPassword, user.getPassword())) {
             user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
             return ResponseEntity.ok().body("Successful password change");
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid password");
@@ -98,7 +96,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(authentication.getName());
 
         Film film = filmRepository.findFilmById(id);
-        if (film != null && user != null){
+        if (film != null && user != null) {
             Set<Film> filmList = user.getFilms();
 
             filmList.add(film);
@@ -108,6 +106,41 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.status(HttpStatus.OK).body("Added");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not founded");
+    }
+
+    @Override
+    public ResponseEntity deleteRoleFromUser(Long roleId, Long userID) {
+        Optional<User> user = userRepository.findById(userID);
+
+        if (user.isPresent()){
+            List<Role> roleList = user.get().getRoles();
+            for (Role role : roleList) {
+                if (role.getId() == roleId){
+                    roleList.remove(role);
+                }
+            }
+            user.get().setRoles(roleList);
+            return ResponseEntity.ok().body(userRepository.save(user.get()));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error");
+    }
+
+    @Override
+    public ResponseEntity addRoleUser(Long roleId, Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+
+        if (user.isPresent()){
+            List<Role> roleList = user.get().getRoles();
+            Optional<Role> role = roleRepository.findById(roleId);
+
+            if (role.isPresent()){
+                roleList.add(role.get());
+                user.get().setRoles(roleList);
+                System.out.println(roleId);
+                return ResponseEntity.ok().body(userRepository.save(user.get()));
+            }
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
     }
 
     @Override
